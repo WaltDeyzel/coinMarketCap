@@ -64,7 +64,9 @@ if __name__ == "__main__":
     bestPerforming = [hourly, daily, weekly]
 
     for interval in bestPerforming:
-        
+        fmt = '{:<3} {:<20} {:<10} {:<10} {:<15} {:<15}'
+        print(fmt.format('NO','COIN', 'PRICE', 'CHANGE', 'MARKETCAP', 'ROI'))
+        print('-------------------------------------------------------------------')
         for i in range(10):
             coin = interval[i]
             page2 = requests.get(coin.link)
@@ -73,28 +75,24 @@ if __name__ == "__main__":
             body2 = soup2.find('tbody', {'class': "cmc-details-panel-about__table"})
             try:
                 marketcap = body2.find_all('td')
-                coin.marketcap = (marketcap[3].text).replace(',',' ')
+                coin.marketcap = (marketcap[3].text).replace(',',' ').replace('USD','')
             except:
                 pass
-            
-            #print(marketcap[2])
-        
-            
             try:
-                coin.roi = body2.find('span', {'class': "cmc--change-positive"}).text
+                coin.roi = (body2.find('span', {'class': "cmc--change-positive"}).text).replace('USD','')
             except:
                 pass
              
-            fmt = '{:<20} {:<10} {:<10} {:<10} {:<15}'
+            
             if(bestPerforming[0] == interval):
                 
-                print(fmt.format(coin.name, coin.price, coin.change1h, coin.roi, coin.marketcap))
+                print(fmt.format(coin.no, coin.name, coin.price, coin.change1h, coin.marketcap, coin.roi))
             if(bestPerforming[1] == interval):
-              
-                print(fmt.format(coin.name, coin.price, coin.change24h, coin.roi, coin.marketcap))
+                
+                print(fmt.format(coin.no, coin.name, coin.price, coin.change24h, coin.marketcap, coin.roi))
             if(bestPerforming[2] == interval):
                 
-                print(fmt.format(coin.name, coin.price, coin.change7d, coin.roi, coin.marketcap))
+                print(fmt.format(coin.no, coin.name, coin.price, coin.change7d, coin.marketcap, coin.roi))
         print()
 
 
