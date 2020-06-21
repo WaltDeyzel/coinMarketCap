@@ -29,7 +29,7 @@ if __name__ == "__main__":
     #STORE ALL THE CRUPTO DATA IN DATA LIST
     data = []
     #SPESIFIC COINS 
-    wallet = ['GNT', 'ETH', 'ADA', 'CVC', 'OMG', 'ZEC', 'XRP', 'LTC', 'LSK', 'NEO', 'XMR', 'QTUM'] 
+    wallet = ['BTC', 'GNT', 'ETH', 'ADA', 'CVC', 'OMG', 'ZEC', 'XRP', 'LTC', 'LSK', 'NEO', 'XMR', 'QTUM'] 
     watchlist = []
 
     for coin in row:
