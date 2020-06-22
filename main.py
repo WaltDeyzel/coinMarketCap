@@ -48,6 +48,7 @@ if __name__ == "__main__":
         
         item.no = int(no)
         item.name = str(name)
+        item.tag = tag
         item.price = float(price[1:].replace(',','')) # removing comma and dollar sign
         item.marketcap = marketcap.replace(',',' ')
         item.change1h = float(change1h.replace('%', ''))
@@ -59,7 +60,6 @@ if __name__ == "__main__":
         #Add spesific coind to seprate list
         if tag in wallet:
             watchlist.append(item)
-            #print(tag)
             #webbrowser.open(item.link)
 
     #SORTED DATA ACCORDING TO...
@@ -81,17 +81,24 @@ if __name__ == "__main__":
     #sections hourly, daily, weekly
     bestPerforming = [[hourly_best, hourly_worst], [daily_best, daily_worst], [weekly_best, weekly_worst]]
 
-    fmt = '{:<3} {:<20} {:<10} {:<10} {:<15} {:<15}'
+    fmt = '{:<2} {:<3} {:<20} {:<10} {:<10} {:<15} {:<15}'
     for section in bestPerforming:
-        heading = fmt.format('NO','COIN', 'PRICE', 'CHANGE', 'MARKETCAP', 'ROI')
-        stripes = '-------------------------------------------------------------------------------'
+        print()
+        heading = fmt.format(' ','NO','COIN', 'PRICE', 'CHANGE', 'MARKETCAP', 'ROI')
+        stripes = '----------------------------------------------------------------------------------'
         print(heading, ' ', heading)
         print(stripes, stripes)
         
-        lhs = section[0]
-        rhs = section[1]   
-            
+        lhs = section[0] # DATA DISPLAYED ON THE LEFT
+        rhs = section[1] # DATA DISPLAYED ON THE RIGHT
+
         for i in range(10):
+            #MARK DATA THAT IS ALSO IN THE WATCHLIST WITH A *
+            starL = " "
+            starR = " "
+            changeL = lhs[i].change24h #DEFAULT 24H
+            changeR = rhs[i].change24h #DEFAULT 24H
+
             lhs_name = lhs[i].name
             rhs_name = rhs[i].name
             if(len(lhs_name)>15):
@@ -100,16 +107,23 @@ if __name__ == "__main__":
                 lhs_name = rhs[i].tag
 
             if(section == bestPerforming[0]):
-                displayL = fmt.format(lhs[i].no, lhs_name, lhs[i].price, str(lhs[i].change1h)+'%', lhs[i].marketcap, lhs[i].roi)
-                displayR = fmt.format(rhs[i].no, rhs_name, rhs[i].price, rhs[i].change1h, rhs[i].marketcap, rhs[i].roi)
+                changeL = lhs[i].change1h
+                changeR = rhs[i].change1h
           
-            if(section == bestPerforming[1]):
-                displayL = fmt.format(lhs[i].no, lhs_name, lhs[i].price, lhs[i].change24h, lhs[i].marketcap, lhs[i].roi)
-                displayR = fmt.format(rhs[i].no, rhs_name, rhs[i].price, rhs[i].change24h, rhs[i].marketcap, rhs[i].roi)
+            #DO NOT NEED TO CHECH FOR SECTION == BESTPERFORMING[1] BECAUSE IT IS THE DEFAULT
                 
             if(section == bestPerforming[2]):
-                displayL = fmt.format(lhs[i].no, lhs_name, lhs[i].price, lhs[i].change7d, lhs[i].marketcap, lhs[i].roi)
-                displayR = fmt.format(rhs[i].no, rhs_name, rhs[i].price, rhs[i].change7d, rhs[i].marketcap, rhs[i].roi)
+                changeL = lhs[i].change7d
+                changeR = rhs[i].change7d
+            
+            if lhs[i].tag in wallet:
+                starL = "*"
+                
+            if rhs[i].tag in wallet:
+                starR = "*"
+           
+            displayL = fmt.format(starL, lhs[i].no, lhs_name, lhs[i].price, changeL, lhs[i].marketcap, lhs[i].roi)
+            displayR = fmt.format(starR, rhs[i].no, rhs_name, rhs[i].price, changeR, rhs[i].marketcap, rhs[i].roi)
             print(displayL,'|', displayR,'|')
         print(stripes, stripes)
     
@@ -119,8 +133,8 @@ if __name__ == "__main__":
     print(stripes, stripes)
     print()
     print('___________________________________WATCHLIST___________________________________')
-    print(fmt.format('NO','COIN', 'PRICE', 'CHANGE', 'MARKETCAP', 'ROI'))
+    print(fmt.format('#','NO','COIN', 'PRICE', 'CHANGE', 'MARKETCAP', 'ROI'))
     print(stripes, stripes)
 
     for coin in watchlist:
-        print(fmt.format(coin.no, coin.name, coin.price, str(coin.change7d)+' %', coin.marketcap, coin.roi))  
+        print(fmt.format(' ',coin.no, coin.name, coin.price, str(coin.change7d)+' %', coin.marketcap, coin.roi))  
