@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests 
 import webbrowser
 import operator
+from constants import htmlStrings as html
 
 class coinData:
     no = 0
@@ -24,7 +25,7 @@ if __name__ == "__main__":
     soup = BeautifulSoup(page.content, 'html.parser')
     #BODY CONTAINS ALL THE DATA IN HTML.
     body = soup.find('tbody')
-    row = body.find_all('tr', {'class': 'cmc-table-row'})
+    row = body.find_all('tr', {'class': html.table})
 
     #STORE ALL THE CRUPTO DATA IN DATA LIST
     data = []
@@ -34,16 +35,16 @@ if __name__ == "__main__":
 
     for coin in row:
         item = coinData()
-        no = coin.find('td', {'class':"cmc-table__cell cmc-table__cell--sticky cmc-table__cell--sortable cmc-table__cell--left cmc-table__cell--sort-by__rank"}).find('div').text
-        nameLink = coin.find('td', {'class':"cmc-table__cell cmc-table__cell--sticky cmc-table__cell--sortable cmc-table__cell--left cmc-table__cell--sort-by__name"}).find('div').find('a')
-        name = nameLink.text
-        tag = coin.find('td', {'class': "cmc-table__cell cmc-table__cell--sortable cmc-table__cell--left cmc-table__cell--sort-by__symbol"}).text
-        link = nameLink.get('href')
-        price = coin.find('td', {'class':"cmc-table__cell cmc-table__cell--sortable cmc-table__cell--right cmc-table__cell--sort-by__price"}).find('a').text
-        marketcap = coin.find('td', {'class': "cmc-table__cell cmc-table__cell--sortable cmc-table__cell--right cmc-table__cell--sort-by__market-cap"}).text
-        change1h = coin.find('td', {'class':"cmc-table__cell cmc-table__cell--sortable cmc-table__cell--right cmc-table__cell--sort-by__percent-change-1-h"}).find('div').text
-        change24h = coin.find('td', {'class':"cmc-table__cell cmc-table__cell--sortable cmc-table__cell--right cmc-table__cell--sort-by__percent-change-24-h"}).find('div').text
-        change7d = coin.find('td', {'class':"cmc-table__cell cmc-table__cell--sortable cmc-table__cell--right cmc-table__cell--sort-by__percent-change-7-d"}).find('div').text
+        no   = coin.find('td', {'class': html.number}).find('div').text
+        nameLink = coin.find('td', {'class': html.link}).find('div').find('a')
+        name  = nameLink.text
+        tag   = coin.find('td', {'class': html.tag}).text
+        link  = nameLink.get('href')
+        price = coin.find('td', {'class': html.price}).find('a').text
+        marketcap = coin.find('td', {'class': html.marketcap}).text
+        change1h  = coin.find('td', {'class': html.change1h}).find('div').text
+        change24h = coin.find('td', {'class': html.change24h}).find('div').text
+        change7d  = coin.find('td', {'class':html.change7d}).find('div').text
         
         item.no = int(no)
         item.name = str(name)
@@ -112,11 +113,12 @@ if __name__ == "__main__":
             print(displayL,'|', displayR,'|')
         print(stripes, stripes)
     
-    watchlist = sorted(watchlist, key=operator.attrgetter('no'))
-
+    watchlist = sorted(watchlist, key=operator.attrgetter('change7d'))
+    watchlist.reverse()
+    
     print(stripes, stripes)
     print()
-    print('********************WATCHLIST********************')
+    print('___________________________________WATCHLIST___________________________________')
     print(fmt.format('NO','COIN', 'PRICE', 'CHANGE', 'MARKETCAP', 'ROI'))
     print(stripes, stripes)
 
