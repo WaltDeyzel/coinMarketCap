@@ -137,4 +137,16 @@ if __name__ == "__main__":
     print(stripes, stripes)
 
     for coin in watchlist:
-        print(fmt.format(' ',coin.no, coin.name, coin.price, str(coin.change7d)+' %', coin.marketcap, coin.roi))  
+        print(fmt.format(' ',coin.no, coin.name, coin.price, str(coin.change7d)+' %', coin.marketcap, coin.roi)) 
+    
+    print()
+    pairs = []
+
+    for coin in weekly:
+
+        if(coin.no <= 30):
+            if(coin.change7d < 0):
+                pairs.append(coin)
+    
+    for coin in pairs:
+        print(fmt.format(' ',coin.no, coin.name, coin.price, str(coin.change7d)+' %', coin.marketcap, coin.roi)) 
