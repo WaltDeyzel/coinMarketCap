@@ -3,8 +3,23 @@ class DisplayData:
     fmt = '{:<2} {:<3} {:<20} {:<10} {:<10} {:<15} {:<15}'
     stripes = '----------------------------------------------------------------------------------'
 
-    def displayData(self, bestPerforming, wallet):
-        
+    def displayData(self, wallet, hourly, daily, weekly):
+        #DISPLAY DATA SET
+        #DISPLAY TOP 10
+        hourly_worst = hourly[:11]
+        hourly_best = hourly[-10:]
+        daily_worst = daily[:11]
+        daily_best = daily[-10:]
+        weekly_worst = weekly[:11]
+        weekly_best = weekly[-10:]
+
+        hourly_best.reverse()
+        weekly_best.reverse()
+        daily_best.reverse()
+        #----------------------------------------------------------------------------------------------
+        #sections hourly, daily, weekly
+        bestPerforming = [[hourly_best, hourly_worst], [daily_best, daily_worst], [weekly_best, weekly_worst]]
+
         for section in bestPerforming:
             print()
             heading = self.fmt.format(' ','NO','COIN', 'PRICE', 'CHANGE', 'MARKETCAP', 'ROI')

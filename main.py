@@ -54,26 +54,14 @@ if __name__ == "__main__":
             watchlist.append(item)
             #webbrowser.open(item.link)
 
+    #---------------------------------------------------------------------------------------------
+    #MAIN DATA SET
     #SORTED DATA ACCORDING TO...
     hourly = sorted(data, key=operator.attrgetter('change1h'))
     daily = sorted(data, key=operator.attrgetter('change24h'))
     weekly = sorted(data, key=operator.attrgetter('change7d'))
 
-    #DISPLAY TOP 10
-    hourly_worst = hourly[:11]
-    hourly_best = hourly[-10:]
-    daily_worst = daily[:11]
-    daily_best = daily[-10:]
-    weekly_worst = weekly[:11]
-    weekly_best = weekly[-10:]
-
-    hourly_best.reverse()
-    weekly_best.reverse()
-    daily_best.reverse()
-    #sections hourly, daily, weekly
-    bestPerforming = [[hourly_best, hourly_worst], [daily_best, daily_worst], [weekly_best, weekly_worst]]
-
-    DisplayData.displayData(DisplayData, bestPerforming, wallet)
+    DisplayData.displayData(DisplayData, wallet, hourly, daily, weekly)
     DisplayData.displayWatchlist(DisplayData, watchlist)
     DisplayData.displayWorstPerforming(DisplayData, weekly)
     
