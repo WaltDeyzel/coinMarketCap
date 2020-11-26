@@ -3,18 +3,7 @@ import requests
 import webbrowser
 import operator
 from constants import htmlStrings as html
-
-class coinData:
-    no = 0
-    name = ''
-    tag = ''
-    price = 0.0
-    change1h = 0.0
-    change24h = 0.0
-    change7d = 0.0
-    link = ''
-    roi = ''
-    marketcap = ''
+from coinData import coinData
 
 if __name__ == "__main__":
     #WEBSITE
@@ -153,3 +142,5 @@ if __name__ == "__main__":
     print('Worst performing coin past week in top' , n)
     for coin in pairs:
         print(fmt.format(' ',coin.no, coin.name, coin.price, str(coin.change7d)+' %', coin.marketcap, coin.roi)) 
+
+data[3].display()
