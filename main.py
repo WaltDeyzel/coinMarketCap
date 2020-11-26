@@ -4,6 +4,7 @@ import webbrowser
 import operator
 from constants import htmlStrings as html
 from coinData import coinData
+from display import DisplayData
 
 if __name__ == "__main__":
     #WEBSITE
@@ -72,75 +73,8 @@ if __name__ == "__main__":
     #sections hourly, daily, weekly
     bestPerforming = [[hourly_best, hourly_worst], [daily_best, daily_worst], [weekly_best, weekly_worst]]
 
-    fmt = '{:<2} {:<3} {:<20} {:<10} {:<10} {:<15} {:<15}'
-    for section in bestPerforming:
-        print()
-        heading = fmt.format(' ','NO','COIN', 'PRICE', 'CHANGE', 'MARKETCAP', 'ROI')
-        stripes = '----------------------------------------------------------------------------------'
-        print(heading, ' ', heading)
-        print(stripes, stripes)
-        
-        lhs = section[0] # DATA DISPLAYED ON THE LEFT
-        rhs = section[1] # DATA DISPLAYED ON THE RIGHT
-
-        for i in range(10):
-            #MARK DATA THAT IS ALSO IN THE WATCHLIST WITH A *
-            starL = " "
-            starR = " "
-            changeL = lhs[i].change24h #DEFAULT 24H
-            changeR = rhs[i].change24h #DEFAULT 24H
-
-            lhs_name = lhs[i].name
-            rhs_name = rhs[i].name
-            if(len(lhs_name)>15):
-                lhs_name = lhs[i].tag
-            if(len(rhs_name)>15):
-                lhs_name = rhs[i].tag
-
-            if(section == bestPerforming[0]):
-                changeL = lhs[i].change1h
-                changeR = rhs[i].change1h
-          
-            #DO NOT NEED TO CHECH FOR SECTION == BESTPERFORMING[1] BECAUSE IT IS THE DEFAULT
-                
-            if(section == bestPerforming[2]):
-                changeL = lhs[i].change7d
-                changeR = rhs[i].change7d
-            
-            if lhs[i].tag in wallet:
-                starL = "*"
-                
-            if rhs[i].tag in wallet:
-                starR = "*"
-           
-            displayL = fmt.format(starL, lhs[i].no, lhs_name, lhs[i].price, changeL, lhs[i].marketcap, lhs[i].roi)
-            displayR = fmt.format(starR, rhs[i].no, rhs_name, rhs[i].price, changeR, rhs[i].marketcap, rhs[i].roi)
-            print(displayL,'|', displayR,'|')
-        print(stripes, stripes)
+    DisplayData.displayData(DisplayData, bestPerforming, wallet)
+    DisplayData.displayWatchlist(DisplayData, watchlist)
+    DisplayData.displayWorstPerforming(DisplayData, weekly)
     
-    watchlist = sorted(watchlist, key=operator.attrgetter('change7d'))
-    watchlist.reverse()
     
-    print(stripes, stripes)
-    print()
-    print('___________________________________WATCHLIST___________________________________')
-    print(fmt.format('#','NO','COIN', 'PRICE', 'CHANGE', 'MARKETCAP', 'ROI'))
-    print(stripes, stripes)
-
-    for coin in watchlist:
-        print(fmt.format(' ',coin.no, coin.name, coin.price, str(coin.change7d)+' %', str(coin.change24h)+' %', coin.marketcap, coin.roi)) 
-    
-    print()
-    pairs = []
-    n = 30
-    for coin in weekly:
-
-        if(coin.no <= n):
-            if(coin.change7d < 0):
-                pairs.append(coin)
-
-    print('Worst performing coin past week in top' , n)
-    for coin in pairs:
-        print(fmt.format(' ',coin.no, coin.name, coin.price, str(coin.change7d)+' %', coin.marketcap, coin.roi)) 
-
-data[3].display()
