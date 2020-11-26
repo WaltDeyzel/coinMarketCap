@@ -20,7 +20,8 @@ if __name__ == "__main__":
     #WEBSITE
     site = "https://coinmarketcap.com/"
     addon = 'all/views/all/'
-    page = requests.get(site+addon)
+    site = site + addon
+    page = requests.get(site)
 
     soup = BeautifulSoup(page.content, 'html.parser')
     #BODY CONTAINS ALL THE DATA IN HTML.
@@ -53,6 +54,7 @@ if __name__ == "__main__":
         item.marketcap = marketcap.replace(',',' ')
         item.change1h = float(change1h.replace('%', ''))
         item.change24h= float(change24h.replace('%', ''))
+        change7d = change7d.replace(',', '')
         item.change7d = float(change7d.replace('%', ''))
         item.link = site + link[1:]
         data.append(item)
@@ -137,16 +139,17 @@ if __name__ == "__main__":
     print(stripes, stripes)
 
     for coin in watchlist:
-        print(fmt.format(' ',coin.no, coin.name, coin.price, str(coin.change7d)+' %', coin.marketcap, coin.roi)) 
+        print(fmt.format(' ',coin.no, coin.name, coin.price, str(coin.change7d)+' %', str(coin.change24h)+' %', coin.marketcap, coin.roi)) 
     
     print()
     pairs = []
-
+    n = 30
     for coin in weekly:
 
-        if(coin.no <= 30):
+        if(coin.no <= n):
             if(coin.change7d < 0):
                 pairs.append(coin)
-    
+
+    print('Worst performing coin past week in top' , n)
     for coin in pairs:
         print(fmt.format(' ',coin.no, coin.name, coin.price, str(coin.change7d)+' %', coin.marketcap, coin.roi)) 
