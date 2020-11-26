@@ -51,6 +51,7 @@ if __name__ == "__main__":
 
         #Add spesific coind to seprate list
         if tag in wallet:
+            item.star = '*'
             watchlist.append(item)
             #webbrowser.open(item.link)
 

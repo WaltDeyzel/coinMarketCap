@@ -1,5 +1,6 @@
 class coinData:
     no = 0
+    star = ' '
     name = ''
     tag = ''
     price = 0.0
@@ -9,9 +10,14 @@ class coinData:
     link = ''
     roi = ''
     marketcap = ''
+    fmt = '{:<2} {:<3} {:<20} {:<10} {:<10} {:<15} {:<15}'
 
-    def display(self):
-        
-        print(self.no, self.name, '$'+str(self.price))
-        print(self.marketcap)
-        print(self.change1h, self.change24h, self.change7d)
+    def displayWeekly(self): #default weekly
+        return(self.fmt.format(self.star,self.no, self.name, self.price, str(self.change7d)+' %', self.marketcap, self.roi)) 
+    
+    def displayDaily(self): #default daily
+        return(self.fmt.format(self.star,self.no, self.name, self.price, str(self.change24h)+' %', self.marketcap, self.roi)) 
+    
+    def displayHourly(self): #default hourly
+        return(self.fmt.format(self.star,self.no, self.name, self.price, str(self.change1h)+' %', self.marketcap, self.roi)) 
+
