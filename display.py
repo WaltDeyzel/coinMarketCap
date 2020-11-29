@@ -3,7 +3,7 @@ class DisplayData:
     fmt = '{:<2} {:<3} {:<20} {:<10} {:<10} {:<15} {:<15}'
     stripes = '----------------------------------------------------------------------------------'
 
-    def displayData(self, wallet, hourly, daily, weekly):
+    def displayData(self, hourly, daily, weekly):
         #DISPLAY DATA SET
         #DISPLAY TOP 10
         hourly_worst = hourly[:11]

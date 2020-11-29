@@ -2,11 +2,30 @@ from bs4 import BeautifulSoup
 import requests 
 import webbrowser
 import operator
+import sys
 from constants import htmlStrings as html
 from coinData import coinData
 from display import DisplayData
 
-if __name__ == "__main__":
+def watchlistFilter(data):
+    watchlist = []
+    for coin in data:
+        if(coin.star == '*'):
+            watchlist.append(coin)
+    return watchlist
+
+def show(data):
+    #SORTED DATA ACCORDING TO...
+    hourly = sorted(data, key=operator.attrgetter('change1h'))
+    daily = sorted(data, key=operator.attrgetter('change24h'))
+    weekly = sorted(data, key=operator.attrgetter('change7d'))
+    watchlist = watchlistFilter(data)
+
+    DisplayData.displayData(DisplayData, hourly, daily, weekly)
+    DisplayData.displayWatchlist(DisplayData, watchlist)
+    DisplayData.displayWorstPerforming(DisplayData, weekly)
+
+def getData():
     #WEBSITE
     site = "https://coinmarketcap.com/"
     addon = 'all/views/all/'
@@ -22,7 +41,6 @@ if __name__ == "__main__":
     data = []
     #SPESIFIC COINS 
     wallet = ['BTC', 'GNT', 'ETH', 'ADA', 'CVC', 'OMG', 'ZEC', 'XRP', 'LTC', 'LSK', 'NEO', 'XMR', 'QTUM'] 
-    watchlist = []
 
     for coin in row:
         item = coinData()
@@ -52,18 +70,17 @@ if __name__ == "__main__":
         #Add spesific coind to seprate list
         if tag in wallet:
             item.star = '*'
-            watchlist.append(item)
             #webbrowser.open(item.link)
+    return data
 
-    #---------------------------------------------------------------------------------------------
-    #MAIN DATA SET
-    #SORTED DATA ACCORDING TO...
-    hourly = sorted(data, key=operator.attrgetter('change1h'))
-    daily = sorted(data, key=operator.attrgetter('change24h'))
-    weekly = sorted(data, key=operator.attrgetter('change7d'))
-
-    DisplayData.displayData(DisplayData, wallet, hourly, daily, weekly)
-    DisplayData.displayWatchlist(DisplayData, watchlist)
-    DisplayData.displayWorstPerforming(DisplayData, weekly)
-    
+if __name__ == "__main__":
+    data = getData()
+    if(len(sys.argv) > 1):
+        try:
+            site = "https://coinmarketcap.com/currencies/" + sys.argv[1]
+            webbrowser.open(site)
+        except:
+            print('FAIL')
+    else:
+        show(data)
     
