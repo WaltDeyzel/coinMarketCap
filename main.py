@@ -1,15 +1,24 @@
 import webbrowser
+import os
 import sys
+from time import sleep
 from cryptoData import CryptoData
 
 if __name__ == "__main__":
     data = CryptoData.getData(CryptoData)
     if(len(sys.argv) > 1):
-        try:
-            site = CryptoData.findCoin(CryptoData, data, sys.argv[1]).link
-            webbrowser.open(site)
-        except:
-            print('FAIL')
+        if(sys.argv[1] == 'time'):
+            for i in range(12):
+                os.system('cmd /c "cls"')
+                data = CryptoData.getData(CryptoData)
+                CryptoData.show(CryptoData,data)
+                sleep(600) # 10 min 12 times = 2 hours
+        else:
+            try:
+                site = CryptoData.findCoin(CryptoData, data, sys.argv[1]).link
+                webbrowser.open(site)
+            except:
+                print('FAIL')
     else:
         CryptoData.show(CryptoData,data)
     
