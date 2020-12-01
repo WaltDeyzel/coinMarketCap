@@ -1,17 +1,19 @@
 import operator
 class DisplayData:
     fmt = '{:<2} {:<3} {:<20} {:<10} {:<10} {:<15} {:<15}'
+    heading = fmt.format(' ','NO','COIN', 'PRICE', 'CHANGE', 'MARKETCAP', 'ROI')
     stripes = '----------------------------------------------------------------------------------'
 
     def displayData(self, hourly, daily, weekly):
         #DISPLAY DATA SET
         #DISPLAY TOP 10
-        hourly_worst = hourly[:11]
-        hourly_best = hourly[-10:]
-        daily_worst = daily[:11]
-        daily_best = daily[-10:]
-        weekly_worst = weekly[:11]
-        weekly_best = weekly[-10:]
+        n = 15
+        hourly_worst = hourly[:n+1]
+        hourly_best = hourly[-n:]
+        daily_worst = daily[:n+1]
+        daily_best = daily[-n:]
+        weekly_worst = weekly[:n+1]
+        weekly_best = weekly[-n:]
 
         hourly_best.reverse()
         weekly_best.reverse()
@@ -22,14 +24,13 @@ class DisplayData:
 
         for section in bestPerforming:
             print()
-            heading = self.fmt.format(' ','NO','COIN', 'PRICE', 'CHANGE', 'MARKETCAP', 'ROI')
-            print(heading, ' ', heading)
+            print(self.heading, ' ', self.heading)
             print(self.stripes, self.stripes)
             
             lhs = section[0] # DATA DISPLAYED ON THE LEFT
             rhs = section[1] # DATA DISPLAYED ON THE RIGHT
 
-            for i in range(10):
+            for i in range(n):
                 displayL = lhs[i].displayDaily()
                 displayR = rhs[i].displayDaily()
 
@@ -47,13 +48,10 @@ class DisplayData:
             print(self.stripes, self.stripes)
     
     def displayWatchlist(self, watchlist):
-        watchlist = sorted(watchlist, key=operator.attrgetter('change7d'))
-        watchlist.reverse()
-       
         print(self.stripes, self.stripes)
         print()
         print('___________________________________WATCHLIST___________________________________')
-        print(self.fmt.format('#','NO','COIN', 'PRICE', 'CHANGE', 'MARKETCAP', 'ROI'))
+        print(self.heading)
         print(self.stripes, self.stripes)
 
         for coin in watchlist:
@@ -61,14 +59,7 @@ class DisplayData:
 
     def displayWorstPerforming(self, weekly):
         print()
-        pairs = []
-        n = 30
+        print('WORST PERFORMING IN TOP' , len(weekly))
+        print(self.heading)
         for coin in weekly:
-
-            if(coin.no <= n):
-                if(coin.change7d < 0):
-                    pairs.append(coin)
-
-        print('Worst performing coin past week in top' , n)
-        for coin in pairs:
             print(coin.displayWeekly())

@@ -59,18 +59,32 @@ class CryptoData:
         hourly = sorted(data, key=operator.attrgetter('change1h'))
         daily = sorted(data, key=operator.attrgetter('change24h'))
         weekly = sorted(data, key=operator.attrgetter('change7d'))
-        watchlist = []
 
-        for coin in data:
-            if(coin.star == '*'):
-                watchlist.append(coin)
+        watchlist = self.getWatchlist(self.getWatchlist, data)
+        worst = self.getWorstPerforming(self.getWorstPerforming, weekly, 30)
 
         DisplayData.displayData(DisplayData, hourly, daily, weekly)
         DisplayData.displayWatchlist(DisplayData, watchlist)
-        DisplayData.displayWorstPerforming(DisplayData, weekly)
+        DisplayData.displayWorstPerforming(DisplayData, worst)
     
     def findCoin(self, data, name):
         for coin in data:
             if coin.name == name:
                 return coin
 
+    def getWatchlist(self, data):
+        watchlist = []
+        for coin in data:
+            if(coin.star == '*'):
+                watchlist.append(coin)
+        watchlist = sorted(watchlist, key=operator.attrgetter('change7d'))
+        watchlist.reverse()
+        return watchlist
+
+    def getWorstPerforming(self, data, n):
+        worst = []
+        for coin in data:
+            if(coin.no <= n):
+                if(coin.change7d < 0):
+                    worst.append(coin)
+        return worst
