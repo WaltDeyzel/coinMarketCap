@@ -1,8 +1,7 @@
 import operator
+from constants import Constants as con
 class DisplayData:
-    fmt = '{:<2} {:<3} {:<20} {:<10} {:<10} {:<15} {:<15}'
-    heading = fmt.format(' ','NO','COIN', 'PRICE', 'CHANGE', 'MARKETCAP', 'ROI')
-    stripes = '----------------------------------------------------------------------------------'
+    heading = con.fmt.format(' ','NO','COIN', 'PRICE', 'CHANGE', 'MARKETCAP', 'ROI')
 
     def displayData(self, hourly, daily, weekly):
         #DISPLAY DATA SET
@@ -25,7 +24,7 @@ class DisplayData:
         for section in bestPerforming:
             print()
             print(self.heading, ' ', self.heading)
-            print(self.stripes, self.stripes)
+            print(con.stripes, con.stripes)
             
             lhs = section[0] # DATA DISPLAYED ON THE LEFT
             rhs = section[1] # DATA DISPLAYED ON THE RIGHT
@@ -45,14 +44,14 @@ class DisplayData:
                     displayR = rhs[i].displayWeekly()
                 
                 print(displayL,'|', displayR,'|')
-            print(self.stripes, self.stripes)
+            print(con.stripes, con.stripes)
     
     def displayWatchlist(self, watchlist):
-        print(self.stripes, self.stripes)
+        print(con.stripes, con.stripes)
         print()
         print('___________________________________WATCHLIST___________________________________')
         print(self.heading)
-        print(self.stripes, self.stripes)
+        print(con.stripes, con.stripes)
 
         for coin in watchlist:
             print(coin.displayWeekly())

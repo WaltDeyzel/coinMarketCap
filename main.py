@@ -2,7 +2,7 @@ import webbrowser
 import os
 import sys
 from time import sleep
-from cryptoData import CryptoData
+from api import CryptoData
 
 if __name__ == "__main__":
     data = CryptoData.getData(CryptoData)
