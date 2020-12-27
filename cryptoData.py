@@ -3,7 +3,7 @@ import requests
 import operator
 from constants import Constants as html
 from display import DisplayData
-from coinData import coinData
+from coinData import CoinData
 
 class CryptoData:
     def getData(self):
@@ -24,7 +24,7 @@ class CryptoData:
         wallet = ['BTC', 'GNT', 'ETH', 'ADA', 'CVC', 'OMG', 'ZEC', 'XRP', 'LTC', 'LSK', 'NEO', 'XMR', 'QTUM'] 
 
         for coin in row:
-            item = coinData()
+            item = CoinData()
             no   = coin.find('td', {'class': html.number}).find('div').text
             nameLink = coin.find('td', {'class': html.link}).find('div').find('a')
             name  = nameLink.text
@@ -60,8 +60,8 @@ class CryptoData:
         daily = sorted(data, key=operator.attrgetter('change24h'))
         weekly = sorted(data, key=operator.attrgetter('change7d'))
 
-        watchlist = self.getWatchlist(self.getWatchlist, data)
-        worst = self.getWorstPerforming(self.getWorstPerforming, weekly, 30)
+        watchlist = CryptoData.getWatchlist(self, data)
+        worst = CryptoData.getWorstPerforming(self, weekly, 30)
 
         DisplayData.displayData(DisplayData, hourly, daily, weekly)
         DisplayData.displayWatchlist(DisplayData, watchlist)

@@ -1,11 +1,10 @@
 from requests import Request, Session
 from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
 import json
-from coinData import coinData
 import requests
 import operator
 from display import DisplayData
-from coinData import coinData
+from coinData import CoinData
 
 class CryptoData:
   def getData(self):
@@ -32,7 +31,7 @@ class CryptoData:
       response = session.get(url, params=parameters)
       data1 = json.loads(response.text)
       for coin in data1['data']:
-        item = coinData()
+        item = CoinData()
 
         item.no   = coin['cmc_rank']
         item.name  = coin['name'].lower()
@@ -68,8 +67,8 @@ class CryptoData:
           daily = sorted(data, key=operator.attrgetter('change24h'))
           weekly = sorted(data, key=operator.attrgetter('change7d'))
 
-          watchlist = self.getWatchlist(self.getWatchlist, data)
-          worst = self.getWorstPerforming(self.getWorstPerforming, weekly, 30)
+          watchlist = CryptoData.getWatchlist(self, data)
+          worst = CryptoData.getWorstPerforming(self, weekly, 30)
 
           DisplayData.displayData(DisplayData, hourly, daily, weekly)
           DisplayData.displayWatchlist(DisplayData, watchlist)

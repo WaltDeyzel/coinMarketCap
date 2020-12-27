@@ -1,6 +1,6 @@
 from constants import Constants as con
 import webbrowser
-class coinData:
+class CoinData:
     id = 0
     no = 0
     star = ' '
@@ -21,14 +21,17 @@ class coinData:
     volume_24h = 0 
 
     def displayWeekly(self): #default weekly
-        return(con.fmt.format(self.star,self.no, self.getName(), con.currency+str(self.price), str(self.change7d)+' %', self.marketcap, self.volume_24h, self.getVolumeCapRatio(), self.getSupplyRatio())) 
+        return(CoinData.display(self, self.change7d))
     
     def displayDaily(self): #default daily
-        return(con.fmt.format(self.star,self.no, self.getName(), con.currency+str(self.price), str(self.change24h)+' %', self.marketcap, self.volume_24h, self.getVolumeCapRatio(), self.getSupplyRatio())) 
+        return(CoinData.display(self, self.change24h))
     
     def displayHourly(self): #default hourly
-        return(con.fmt.format(self.star,self.no, self.getName(), con.currency+str(self.price), str(self.change1h)+' %', self.marketcap, self.volume_24h, self.getVolumeCapRatio(), self.getSupplyRatio())) 
+        return(CoinData.display(self, self.change1h))
 
+    def display(self, change):
+        return(con.fmt.format(self.star,self.no, self.getName(), con.currency+str(self.price), str(change)+' %', self.marketcap, self.volume_24h, self.getVolumeCapRatio(), self.getSupplyRatio())) 
+        
     def getName(self):
         if(len(self.name)>10):
             return self.tag
