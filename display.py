@@ -1,7 +1,7 @@
 import operator
 from constants import Constants as con
 class DisplayData:
-    heading = con.fmt.format(' ','NO','COIN', 'PRICE', 'CHANGE', 'MARKETCAP', 'ROI')
+    heading = con.heading
 
     def displayData(self, hourly, daily, weekly):
         #DISPLAY DATA SET

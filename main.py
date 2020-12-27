@@ -1,4 +1,3 @@
-import webbrowser
 import os
 import sys
 from time import sleep
@@ -15,8 +14,7 @@ if __name__ == "__main__":
                 data = CryptoData.getData(CryptoData)
         else:
             try:
-                site = CryptoData.findCoin(CryptoData, data, sys.argv[1]).link
-                webbrowser.open(site)
+                site = CryptoData.findCoin(CryptoData, data, sys.argv[1]).launch()
             except:
                 print('FAIL')
     else:

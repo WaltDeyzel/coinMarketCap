@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import operator
-from constants import htmlStrings as html
+from constants import Constants as html
 from display import DisplayData
 from coinData import coinData
 

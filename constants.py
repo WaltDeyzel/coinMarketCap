@@ -10,6 +10,7 @@ class Constants:
     change24h = "cmc-table__cell cmc-table__cell--sortable cmc-table__cell--right cmc-table__cell--sort-by__percent-change-24-h"
     change7d = "cmc-table__cell cmc-table__cell--sortable cmc-table__cell--right cmc-table__cell--sort-by__percent-change-7-d"
 
-    fmt = '{:<2} {:<3} {:<22} {:<13} {:<10} {:<17} {:<13}'
+    fmt = '{:<2} {:<3} {:<22} {:<13} {:<10} {:<17} {:<13} {:<7} {:<7}'
     currency = 'R '
-    stripes = '---------------------------------------------------------------------------------------'
+    stripes = '-------------------------------------------------------------------------------------------------------'
+    heading = fmt.format(' ','NO','COIN', 'PRICE', 'CHANGE', 'MARKETCAP', 'VOLUME', 'V/MC', 'SUPPLY')

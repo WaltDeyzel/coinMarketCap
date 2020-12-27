@@ -49,7 +49,7 @@ class CryptoData:
         item.circulating_supply = coin['circulating_supply']
         item.max_supply = coin['max_supply']
         item.total_supply = coin['total_supply']
-        item.volume_24h = coin['quote']['ZAR']['volume_24h']
+        item.volume_24h = round(coin['quote']['ZAR']['volume_24h'])
         
         data.append(item)
 
