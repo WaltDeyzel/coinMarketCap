@@ -31,30 +31,34 @@ class CryptoData:
       response = session.get(url, params=parameters)
       data1 = json.loads(response.text)
       for coin in data1['data']:
-        item = CoinData()
-
-        item.no   = coin['cmc_rank']
-        item.name  = coin['name'].lower()
-        item.tag   = coin['symbol']
-        item.price = round(coin['quote']['ZAR']['price'],2)
-        item.marketcap = round(coin['quote']['ZAR']['market_cap'])
-        item.change1h  = round(coin['quote']['ZAR']['percent_change_1h'],2)
-        item.change24h = round(coin['quote']['ZAR']['percent_change_24h'],2)
-        item.change7d  = round(coin['quote']['ZAR']['percent_change_7d'],2)
-
-        item.id = coin['id']
-        item.num_market_pairs = coin['num_market_pairs']
-        item.date_added = coin['date_added']
-        item.circulating_supply = coin['circulating_supply']
-        item.max_supply = coin['max_supply']
-        item.total_supply = coin['total_supply']
-        item.volume_24h = round(coin['quote']['ZAR']['volume_24h'])
         
-        data.append(item)
+        no   = coin['cmc_rank']
+        name  = coin['name'].lower()
+        tag   = coin['symbol']
+        price = round(coin['quote']['ZAR']['price'],2)
+        marketcap = round(coin['quote']['ZAR']['market_cap'])
+        change1h  = round(coin['quote']['ZAR']['percent_change_1h'],2)
+        change24h = round(coin['quote']['ZAR']['percent_change_24h'],2)
+        change7d  = round(coin['quote']['ZAR']['percent_change_7d'],2)
+
+        id = coin['id']
+        num_market_pairs = coin['num_market_pairs']
+        date_added = coin['date_added']
+        circulating_supply = coin['circulating_supply']
+        max_supply = coin['max_supply']
+        total_supply = coin['total_supply']
+        volume_24h = round(coin['quote']['ZAR']['volume_24h'])
+        roi = 0
+        star = ' '
 
         #Add spesific coins to seprate list
-        if item.tag in wallet:
-            item.star = '*'
+        if tag in wallet:
+            star = '*'
+        
+        item = CoinData(id, no, star, name, tag, price, change1h, change24h, change7d, roi, marketcap, num_market_pairs, date_added, circulating_supply, max_supply, total_supply, volume_24h)
+        data.append(item)
+
+        
 
       return data
         

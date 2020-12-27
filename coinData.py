@@ -1,24 +1,24 @@
 from constants import Constants as con
 import webbrowser
 class CoinData:
-    id = 0
-    no = 0
-    star = ' '
-    name = ''
-    tag = ''
-    price = 0.0
-    change1h = 0.0
-    change24h = 0.0
-    change7d = 0.0
-    roi = ''
-    marketcap = 0
-    
-    num_market_pairs = 0
-    date_added = ''
-    circulating_supply = 0
-    max_supply = 0
-    total_supply = 0
-    volume_24h = 0 
+    def __init__(self, id, no, star, name, tag, price, change1h, change24h, change7d, roi, marketcap, num_market_pairs, date_added, circulating_supply, max_supply, total_supply, volume_24h):
+        self.id = id
+        self.no = no
+        self.star = star
+        self.name = name
+        self.tag = tag
+        self.price = price
+        self.change1h = change1h
+        self.change24h = change24h
+        self.change7d = change7d
+        self.roi = roi
+        self.marketcap = marketcap
+        self.num_market_pairs = num_market_pairs
+        self.date_added = date_added
+        self.circulating_supply = circulating_supply
+        self.max_supply = max_supply
+        self.total_supply = total_supply
+        self.volume_24h = volume_24h
 
     def displayWeekly(self): #default weekly
         return(CoinData.display(self, self.change7d))
