@@ -77,6 +77,9 @@ class CryptoData:
           DisplayData.displayData(DisplayData, hourly, daily, weekly)
           DisplayData.displayWatchlist(DisplayData, watchlist)
           DisplayData.displayWorstPerforming(DisplayData, worst)
+  
+  def filter(self, data, category):
+    return(sorted(data, key=operator.attrgetter(category)))
       
   def findCoin(self, data, name):
       for coin in data:
@@ -88,7 +91,7 @@ class CryptoData:
       for coin in data:
           if(coin.star == '*'):
               watchlist.append(coin)
-      watchlist = sorted(watchlist, key=operator.attrgetter('change7d'))
+      watchlist = CryptoData.filter(self, watchlist, 'change7d')
       watchlist.reverse()
       return watchlist
 
@@ -99,3 +102,20 @@ class CryptoData:
               if(coin.change7d < 0):
                   worst.append(coin)
       return worst
+    
+  def writeFile(self, data):
+    watchlist = CryptoData.getWatchlist(CryptoData, data)
+
+    path = 'C:\\Users\\waltd\\coding\\python\\marketcap\\watchlist_file.txt'
+    message = ''
+
+    for coin in watchlist:
+      name = coin.name
+      price = coin.price
+      change = coin.change7d
+      message += str(name) + " : R " + str(price) + " | " + str(change)+"%\n"
+
+    with open(path, mode='w') as watchlist_file:
+        watchlist_file.write(message)
+
+       

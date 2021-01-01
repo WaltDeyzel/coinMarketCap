@@ -1,0 +1,13 @@
+bitcoin : R 430078.95 | 22.03%
+ethereum : R 10840.73 | 18.21%
+cardano : R 2.64 | 14.02%
+litecoin : R 1884.87 | 10.67%
+zcash : R 967.92 | 6.88%
+monero : R 2413.91 | 4.54%
+golem : R 1.63 | 3.02%
+qtum : R 33.14 | -3.11%
+omg network : R 38.34 | -3.5%
+lisk : R 17.19 | -4.79%
+civic : R 1.28 | -6.84%
+neo : R 212.35 | -7.07%
+xrp : R 3.53 | -32.34%

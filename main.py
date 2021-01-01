@@ -5,6 +5,7 @@ from api import CryptoData
 
 if __name__ == "__main__":
     data = CryptoData.getData(CryptoData)
+    CryptoData.writeFile(CryptoData, data)
     if(len(sys.argv) > 1):
         if(sys.argv[1] == 'time'):
             for i in range(12):

@@ -6,7 +6,7 @@ class DisplayData:
     def displayData(self, hourly, daily, weekly):
         #DISPLAY DATA SET
         #DISPLAY TOP 10
-        n = 15
+        n = con.numberOfElements
         hourly_worst = hourly[:n+1]
         hourly_best = hourly[-n:]
         daily_worst = daily[:n+1]
